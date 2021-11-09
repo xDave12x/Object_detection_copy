@@ -1,7 +1,8 @@
 var status1="";
 img="";
+objects=[];
 function preload(){
-img=loadImage('dog_cat.jpg');
+img=loadImage('chair.JPG');
 }
 function setup(){
 canvas=createCanvas(640,420);
@@ -19,12 +20,20 @@ if(error){
     console.log(error);
 }
 console.log(results);
+objects=results;
 }
 function draw(){
 image(img,0,0,640,420);
-fill('#ff0000');
-text("chair",45,75);
-noFill();
-stroke("#ff0000");
-rect(30,60,450,350);
+if(status1!=""){
+    for(i=0;i<objects.length;i++){
+        document.getElementById("status").innerHTML="status:objects detected";
+        fill("#ff0000");
+        percent=floor(objects[i].confidence*100);
+        text(objects[i].label+" "+percent+"%",objects[i].x+15,objects[i].y+15);
+        noFill();
+        stroke("#ff0000");
+        rect(objects[i].x,objects[i].y,objects[i].width,objects[i].height);
+
+    }
+}
 }
